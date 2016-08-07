@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+  <% include nav/header.ejs%>
+
+    <h1><%= title %></h1>
+    <p>modified Welcome to <%= title %></p>
+  <p>made by <%= name %></p>
+  <ul>
+    <%for(var i =0;i<5;i++) {%>
+    <li>count <%= num %></li>
+      <%}%>
+    <h3><%= jdata.count%></h3>
+  </ul>
+  </body>
+</html>
