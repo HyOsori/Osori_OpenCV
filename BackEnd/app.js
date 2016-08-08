@@ -5,10 +5,7 @@ var cookieParser = require('cookie-parser'); //쿠키처리 모듈
 var bodyParser = require('body-parser'); //바디내용들을 해석
 var mongoose =require('mongoose'); // db 활용툴
 
-
-
 var routes = require('./routes/index'); //라우트
-
 
 var count = require('./routes/count');
 
@@ -44,8 +41,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
-
 
 // error handlers
 

@@ -11,10 +11,11 @@
 
 var data = new Array;
 var refresh = function() {
+    console.log("aaaa");
     $.get(
         "http://localhost:3000/count",
         function (response) {
-            $('#people_count').text(response[11].num);
+            $('#people_count').text(response[response.length-1].num);
             // console.log('dddddd');
             // for (var i = 10; i < 15; i++) {
             //     data.push(response[i].num);
@@ -24,6 +25,11 @@ var refresh = function() {
     );
 
     new Chart(document.getElementById("canvas").getContext("2d")).Line(drawGraph());
+}
+
+var submit = function(){
+    //alert("hi");
+    console.log("bbb");
 }
 
 

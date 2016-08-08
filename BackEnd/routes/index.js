@@ -6,7 +6,7 @@ var router = express.Router();
 global.inmemoryCount = [
   {
     time:'00h 00m 00s',
-    count:0
+    num:0
   }
 ];
 

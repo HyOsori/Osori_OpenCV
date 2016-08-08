@@ -8,8 +8,9 @@ var router = express.Router();
 router.get('/',function(req, res, next){
    //res.render('count',counts)
    //res.json(counts);
-      console.log(inmemoryCount);
+      //console.log(inmemoryCount);
       res.json(inmemoryCount);
+      console.log(inmemoryCount[inmemoryCount.length-1]);
 
 });
 
