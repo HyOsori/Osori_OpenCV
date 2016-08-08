@@ -1,18 +1,10 @@
 var express = require('express'),
     Count = require('../models/count');
 
-var router = express.Router();
+var exportVar = require('./index');
+var inmemoryCount = exportVar._inmemoryCount;
 
-var counts = [{
-   title: 'count1',
-   num: 3
-}, {
-   title: 'count2',
-   num: 5
-}, {
-   title: 'count3',
-   num: 10
-}];
+var router = express.Router();
 
 router.get('/',function(req, res, next){
    //res.render('count',counts)
@@ -21,6 +13,9 @@ router.get('/',function(req, res, next){
       if(err){
          return next(err);
       }
+
+      console.log(inmemoryCount);
+
       res.render('count',{counts: counts});
    });
 
