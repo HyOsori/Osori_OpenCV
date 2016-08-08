@@ -8,6 +8,8 @@ var app = require('../app');
 var debug = require('debug')('untitled1:server');
 var http = require('http');
 
+var Count = require('../models/count');
+
 /**
  * Get port from environment and store in Express.
  */
@@ -87,4 +89,16 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  
+  
+  // DB에서 정보 초기화
+  Count.find({},function(err,counts){
+    if(err){
+      return next(err);
+    }
+    inmemoryCount.push(counts);
+    console.log(inmemoryCount);
+  });
+  
+  
 }

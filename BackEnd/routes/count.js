@@ -2,27 +2,19 @@ var express = require('express'),
     Count = require('../models/count');
 
 var exportVar = require('./index');
-var inmemoryCount = exportVar._inmemoryCount;
 
 var router = express.Router();
 
 router.get('/',function(req, res, next){
    //res.render('count',counts)
    //res.json(counts);
-   Count.find({},function(err,counts){
-      if(err){
-         return next(err);
-      }
-
       console.log(inmemoryCount);
-
-      res.render('count',{counts: counts});
-   });
+      res.json(inmemoryCount);
 
 });
 
 router.get('/:id',function(req, res){
-   var count = counts[req.params.id]; // counts[0]
+   var count = inmemoryCount[req.params.id]; // counts[0]
    res.json(count);
 });
 
@@ -36,6 +28,7 @@ router.post('/',function(req, res){
       num: req.body.num,
    });
 
+   //DB저장
    newCount.save(function(err){
       if(err){
          return next(err);
@@ -43,6 +36,8 @@ router.post('/',function(req, res){
          res.json(req.body);
       }
    });
+   //memory캐싱
+   inmemoryCount.push(newCount);
 
 });
 

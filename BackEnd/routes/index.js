@@ -3,13 +3,12 @@ var router = express.Router();
 
 /* GET home page. */
 
-var inmemoryCount = [
+global.inmemoryCount = [
   {
     time:'00h 00m 00s',
     count:0
   }
 ];
-exports._inmemoryCount = inmemoryCount;
 
 var inmemoryReply = [
   {
@@ -17,7 +16,6 @@ var inmemoryReply = [
   Reply: 'hello world'
   }
 ];
-
 
 router.get('/', function(req, res, next) {
   res.render('frontend_index', { counts: inmemoryCount, reply: inmemoryReply }); //title을 매개변수로 넘김
