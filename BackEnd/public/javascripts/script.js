@@ -13,24 +13,34 @@ var data = new Array;
 var refresh = function() {
     console.log("aaaa");
     $.get(
-        "http://localhost:3000/count",
+        "http://192.168.0.12:3000/count",
         function (response) {
             $('#people_count').text(response[response.length-1].num);
-            // console.log('dddddd');
-            // for (var i = 10; i < 15; i++) {
-            //     data.push(response[i].num);
-            //     console.log(data[i-10]);
-            // }
         }
     );
-
     new Chart(document.getElementById("canvas").getContext("2d")).Line(drawGraph());
 }
 
 var submit = function(){
-    //alert("hi");
-    console.log("bbb");
-}
+    var d = new Date();
+    var date = d.getHours() +"h" + d.getMinutes() + "m" + d.getSeconds() + "s";
+    var obj = new Object();
+    obj.date = date;
+    obj.comment = document.insert.comment.value;
+    var json_data = JSON.constructor(obj);
+    var request = $.ajax({
+        url: "http://192.168.0.12:3000/",
+        type: "POST",
+        data: json_data,
+        dataType: "json"
+    });
+
+    request.done(function (data) {
+         $('#board').text(data.comment);
+    })
+
+
+};
 
 
 var drawGraph = function(){

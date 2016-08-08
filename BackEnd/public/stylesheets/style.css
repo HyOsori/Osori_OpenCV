@@ -94,6 +94,7 @@ body {
     border-radius: 20px;
     transition: all 0.5s ease-in-out;
     margin-bottom:20px;
+    display: inline-block;
 }
 
 .comment:hover, .comment:focus{

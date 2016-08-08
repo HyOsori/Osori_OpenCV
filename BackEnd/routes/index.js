@@ -11,10 +11,7 @@ global.inmemoryCount = [
 ];
 
 var inmemoryReply = [
-  {
-  time: '00h 00m 00s',
-  Reply: 'hello world'
-  }
+
 ];
 
 router.get('/', function(req, res, next) {
@@ -22,12 +19,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/',function(req,res,next){
-  if(inmemoryCount.length<10) {
+  if(inmemoryReply.length<10) {
     inmemoryReply.push(req.body);
   }else{
     inmemoryReply.splice(1,0);
   }
-  res.render('frontend_index',{ counts: inmemoryCount, reply: inmemoryReply });
+  console.log(inmemoryReply);
+  res.json(inmemoryReply[inmemoryReply.length-1]);
 });
 
 module.exports = router;
