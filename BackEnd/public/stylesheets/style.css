@@ -11,7 +11,8 @@ body {
     width: 960px;
     height: 700px;
     margin-left: -480px;
-    margin-top: -350px;
+    margin-top: -300px;
+    margin-bottom: 20px;
     background-color: #fffffe;
     box-shadow: 0px 0px 55px #463E4A;
     text-align: center;
@@ -21,7 +22,6 @@ body {
     width:100%;
     height:150px;
     background-color: #f3f3f4;
-    /*margin:0px;*/
     margin-bottom:20px;
     /*text-align: center;*/
 }
@@ -62,11 +62,10 @@ body {
     color: #444F6B;
     font-size:40px;
     letter-spacing: -1px;
-    display: block;
     margin-bottom:20px;
 }
 
-.refreshBtn {
+.refreshBtn{
     background-color: #444F6B;
     color: #FFF;
     width: 10%;
@@ -75,7 +74,6 @@ body {
     transition: all 0.5s ease-in-out;
     border: none;
     text-transform: uppercase;
-    display: inline-block;
     margin-bottom:20px;
 }
 
@@ -85,6 +83,7 @@ body {
     outline: 0;
 }
 
+
 .comment{
     width: 70%;
     border: none;
@@ -93,8 +92,8 @@ body {
     border: 2px solid #f3f3f4;
     border-radius: 20px;
     transition: all 0.5s ease-in-out;
-    margin-bottom:20px;
-    display: inline-block;
+    margin-bottom:10px;
+    /*display: inline-block;*/
 }
 
 .comment:hover, .comment:focus{
@@ -123,11 +122,11 @@ body {
 }
 
 
-:before, :after {
-    content: '';
-    display: block;
-    box-sizing: border-box;
-}
+/*:before, :after {*/
+    /*content: '';*/
+    /*display: block;*/
+    /*box-sizing: border-box;*/
+/*}*/
 
 .footer {
     width: 100%;
@@ -138,3 +137,30 @@ body {
     margin-top: 320px;
     /*text-align: center;*/
 }
+
+#board{
+    font-size: 20pt;
+    font-weight:bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.axis path {
+    fill: none;
+    stroke: rgba(0,0,0,.1);
+    shape-rendering: crispEdges;
+}
+.axis text {
+    font-family: Lato;
+    font-size: 13px;
+}
+
+path{
+    stroke: rgba(90,190,90,1)
+}
+
+path.area{
+    fill: rgba(90,190,90,.5);
+}
+
+

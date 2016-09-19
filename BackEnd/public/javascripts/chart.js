@@ -16,7 +16,7 @@
 //     return data;
 // };
 
-
+/*
 var myData = {
     labels : ["1h","2h","3h","4h","5h"],
     datasets : [
@@ -43,5 +43,7 @@ var myData = {
         }
     ]
 }
+*/
 
-new Chart(document.getElementById("canvas").getContext("2d")).Line(myData);
+//var chart = new Chart(document.getElementById("canvas").getContext("2d")).Line(myData);
+//console.log('chart : ' + JSON.stringify(chart, null, 4));

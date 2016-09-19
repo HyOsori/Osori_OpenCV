@@ -10,7 +10,8 @@ var http = require('http');
 
 var Count = require('../models/count');
 
-global.serverAdd = '192.168.0.12';
+global.serverAdd = '127.0.0.1';
+    // '192.168.0.12';
 /**
  * Get port from environment and store in Express.
  */
