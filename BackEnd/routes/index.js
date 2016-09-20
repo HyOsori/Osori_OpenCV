@@ -19,11 +19,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/',function(req,res,next){
-  if(inmemoryReply.length<10) {
-    inmemoryReply.push(req.body);
-  }else{
-    inmemoryReply.splice(1,0);
-  }
+  inmemoryReply.push(req.body);
+
+  if(inmemoryReply.length>=10)
+    inmemoryReply.splice(0,1);
+
   console.log(inmemoryReply);
   res.json(inmemoryReply[inmemoryReply.length-1]);
 });
