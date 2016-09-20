@@ -118,7 +118,7 @@ void TypedMat<T>::Attach(const cv::Mat& m)
 template<class T>
 void TypedMat<T>::Attach(const IplImage& m)
 {
-	assert(sizeof(T)==m.elemSize1());
+	//assert(sizeof(T)==m.elemSize1());
 
 	m_nChannels = m.nChannels;
 	m_nRows = m.height;

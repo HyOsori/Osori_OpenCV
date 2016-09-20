@@ -3,8 +3,11 @@
 // Written  by darkpgmr (http://darkpgmr.tistory.com), 2013
 
 #include <iostream>
-#include <windows.h>
 #include "use_opencv.h"
+
+#ifndef __APPLE__
+#include <windows.h>
+#endif
 
 #include <cpprest/http_client.h>
 #include <cpprest/filestream.h>
@@ -75,6 +78,7 @@ int main(int argc, char* argv[])
 	}
 	else if(data_src=='3')
 	{
+#ifndef __APPLE__
 		char cur_path[255];
 		//::GetCurrentDirectory(255, cur_path);
 
@@ -103,6 +107,7 @@ int main(int argc, char* argv[])
 			cout << "can't open video file" << endl;
 			return 0;
 		}
+#endif
 	}
 	else
 		return 0;
@@ -110,7 +115,8 @@ int main(int argc, char* argv[])
 	//select pedestrian detection method
 	char method;
 	cout << endl;
-	cout << "  1. HOG (INRIA)\n"
+	cout << "  0. DEFAULT\n"
+         << "  1. HOG (INRIA)\n"
 		 << "  2. HOG (Daimler)\n"
 		 << "  3. hogcascades\n"
 		 << "  4. haarcascades\n";
@@ -119,7 +125,7 @@ int main(int argc, char* argv[])
 
 	if(vc)
 	{
-		if (method == '0') detect_default_people(vc);
+		if(method=='0') detect_default_people(vc);
 		if(method=='1') detect_hog_inria(vc);
 		if(method=='2') detect_hog_daimler(vc);
 		if(method=='3') detect_hogcascades(vc);
@@ -146,6 +152,9 @@ void detect_default_people(VideoCapture* vc)
 
 		vector<Rect> found, found_filtered;
 		hog.detectMultiScale(img, found, 0, Size(8, 8), Size(32, 32), 1.05, 2);
+        
+		record_info(infoList, Info((int)found.size(), clock()));
+        
 		size_t i, j;
 		for (i = 0; i<found.size(); i++)
 		{
@@ -186,14 +195,14 @@ void detect_hog_inria(VideoCapture *vc)
 
 	Mat frame;
 	__int64 freq,start,finish;
-	::QueryPerformanceFrequency((_LARGE_INTEGER*)&freq);
+	//::QueryPerformanceFrequency((_LARGE_INTEGER*)&freq);
 	while(1)
 	{
 		// input image
 		*vc >> frame;
 		if(frame.empty()) break;
 
-		::QueryPerformanceCounter((_LARGE_INTEGER*)&start);
+		//::QueryPerformanceCounter((_LARGE_INTEGER*)&start);
 
 		// detect
 		vector<Rect> found;
@@ -202,10 +211,10 @@ void detect_hog_inria(VideoCapture *vc)
 		record_info(infoList, Info((int)found.size(), clock()));
 
 		// processing time (fps)
-		::QueryPerformanceCounter((_LARGE_INTEGER*)&finish);
+		//::QueryPerformanceCounter((_LARGE_INTEGER*)&finish);
 		double fps = freq / double(finish - start + 1);
 		char fps_str[20];
-		sprintf_s(fps_str, 20, "FPS: %.1lf", fps);
+		//sprintf_s(fps_str, 20, "FPS: %.1lf", fps);
 		putText(frame, fps_str, Point(5, 35), FONT_HERSHEY_SIMPLEX, 1., Scalar(0,255,0), 2);
 
 		// draw results (bounding boxes)
@@ -237,7 +246,7 @@ void detect_hog_daimler(VideoCapture *vc)
 	// run
 	Mat frame;
 	__int64 freq,start,finish;
-	::QueryPerformanceFrequency((_LARGE_INTEGER*)&freq);
+	//::QueryPerformanceFrequency((_LARGE_INTEGER*)&freq);
 
 	while(1)
 	{
@@ -245,7 +254,7 @@ void detect_hog_daimler(VideoCapture *vc)
 		*vc >> frame;
 		if(frame.empty()) break;
 
-		::QueryPerformanceCounter((_LARGE_INTEGER*)&start);
+		//::QueryPerformanceCounter((_LARGE_INTEGER*)&start);
 
 		// detect
 		vector<Rect> found;
@@ -254,10 +263,10 @@ void detect_hog_daimler(VideoCapture *vc)
         record_info(infoList, Info((int)found.size(), clock()));
 
 		// processing time (fps)
-		::QueryPerformanceCounter((_LARGE_INTEGER*)&finish);
+		//::QueryPerformanceCounter((_LARGE_INTEGER*)&finish);
 		double fps = freq / double(finish - start + 1);
 		char fps_str[20];
-		sprintf_s(fps_str, 20, "FPS: %.1lf", fps);
+		//sprintf_s(fps_str, 20, "FPS: %.1lf", fps);
 		putText(frame, fps_str, Point(5, 35), FONT_HERSHEY_SIMPLEX, 1., Scalar(0,255,0), 2);
 
 		// draw results (bounding boxes)
@@ -296,14 +305,14 @@ void detect_hogcascades(VideoCapture *vc)
 	// run
 	Mat frame;
 	__int64 freq,start,finish;
-	::QueryPerformanceFrequency((_LARGE_INTEGER*)&freq);
+	//::QueryPerformanceFrequency((_LARGE_INTEGER*)&freq);
 	while(1)
 	{
 		// input image
 		*vc >> frame;
 		if(frame.empty()) break;
 
-		::QueryPerformanceCounter((_LARGE_INTEGER*)&start);
+		//::QueryPerformanceCounter((_LARGE_INTEGER*)&start);
 
 		// detect
 		vector<Rect> found;
@@ -312,10 +321,10 @@ void detect_hogcascades(VideoCapture *vc)
 		record_info(infoList, Info((int)found.size(), clock()));
 
 		// processing time (fps)
-		::QueryPerformanceCounter((_LARGE_INTEGER*)&finish);
+		//::QueryPerformanceCounter((_LARGE_INTEGER*)&finish);
 		double fps = freq / double(finish - start + 1);
 		char fps_str[20];
-		sprintf_s(fps_str, 20, "FPS: %.1lf", fps);
+		//sprintf_s(fps_str, 20, "FPS: %.1lf", fps);
 		putText(frame, fps_str, Point(5, 35), FONT_HERSHEY_SIMPLEX, 1., Scalar(0,255,0), 2);
 
 		// draw results (bounding boxes)
@@ -354,14 +363,14 @@ void detect_haarcascades(VideoCapture *vc)
 	// run
 	Mat frame;
 	__int64 freq,start,finish;
-	::QueryPerformanceFrequency((_LARGE_INTEGER*)&freq);
+	//::QueryPerformanceFrequency((_LARGE_INTEGER*)&freq);
 	while(1)
 	{
 		// input image
 		*vc >> frame;
 		if(frame.empty()) break;
 
-		::QueryPerformanceCounter((_LARGE_INTEGER*)&start);
+		//::QueryPerformanceCounter((_LARGE_INTEGER*)&start);
 
 		// detect
 		vector<Rect> found;
@@ -370,10 +379,10 @@ void detect_haarcascades(VideoCapture *vc)
 		record_info(infoList, Info((int)found.size(), clock()));
 
 		// processing time (fps)
-		::QueryPerformanceCounter((_LARGE_INTEGER*)&finish);
+		//::QueryPerformanceCounter((_LARGE_INTEGER*)&finish);
 		double fps = freq / double(finish - start + 1);
 		char fps_str[20];
-		sprintf_s(fps_str, 20, "FPS: %.1lf", fps);
+		//sprintf_s(fps_str, 20, "FPS: %.1lf", fps);
 		putText(frame, fps_str, Point(5, 35), FONT_HERSHEY_SIMPLEX, 1., Scalar(0,255,0), 2);
 
 		// draw results (bounding boxes)
@@ -413,19 +422,44 @@ void record_info(list <Info>& infoList, Info info)
 
 			// 시간 보내줌
 			struct tm *t = NULL;
-			time_t timer;
+			time_t timer = time(NULL);
 
-			timer = time(NULL);
-			//t = localtime(&timer);
+#ifdef __APPLE__
+			t = localtime(&timer);
+            
+            string stime = to_string(t->tm_hour) + "h " + to_string(t->tm_min) + "m " +
+            to_string(t->tm_sec) + "s ";
+            
+            json::value obj;
+            
+            wstring ws;
+            ws.assign(stime.begin(), stime.end());
+            obj["title"] = json::value::string(stime);
+            obj["num"] = json::value::number(AVG);
+            
+            cout << obj << endl;
+            
+            //http post request
+            http_client client(U("http://localhost:3000/count"));
+            
+            http_request request(methods::POST);
+            request.headers().add("Content-Type", "application/json; charset=UTF-8");
+            request.headers().add("Content-Length", "100");
+            request.headers().add("Host", "testhost.com");
+            request.headers().add("X-Requested-With", "XMLHttpRequest");
+            request.set_body(obj);
+            
+            auto resp = client.request(request).get();
+            
+            cout << U("STATUS : ") << resp.status_code() << endl;
+            cout << "content-type : " << resp.headers().content_type() << endl;
+            cout << resp.extract_string(true).get() << endl;
+#else
 			localtime_s(t, &timer);
-			string stime = to_string(t->tm_hour) + "h " + to_string(t->tm_min) + "m " +
-				to_string(t->tm_sec) + "s ";
-			wstring ws;
-			ws.assign(stime.begin(), stime.end());
-
-			//post 요청
-			json::value obj;
-
+            
+            string stime = to_string(t->tm_hour) + "h " + to_string(t->tm_min) + "m " +
+            to_string(t->tm_sec) + "s ";
+            
 			obj[L"title"] = json::value::string(ws);
 			obj[L"num"] = json::value::number(AVG);
 
@@ -440,11 +474,13 @@ void record_info(list <Info>& infoList, Info info)
 			request.headers().add(L"Host", L"testhost.com");
 			request.headers().add(L"X-Requested-With", L"XMLHttpRequest");
 			request.set_body(obj);
+            
+            auto resp = client.request(request).get();
+            
+            wcout << U("STATUS : ") << resp.status_code() << endl;
+            wcout << "content-type : " << resp.headers().content_type() << endl;
+            wcout << resp.extract_string(true).get() << endl;
+#endif
 
-			auto resp = client.request(request).get();
-			
-			wcout << U("STATUS : ") << resp.status_code() << endl;
-			wcout << "content-type : " << resp.headers().content_type() << endl;
-			wcout << resp.extract_string(true).get() << endl;
 		}
 }
